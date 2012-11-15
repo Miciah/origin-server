@@ -6,7 +6,7 @@
 
 
 When /^I create a new namespace OLD$/ do
-  exit_code = run("#{$create_domain_script} -n vuvuzuzufukuns -l vuvuzuzufuku -p fakepw -d")
+  exit_code = run("#{$rhc_client} domain create vuvuzuzufukuns -l vuvuzuzufuku -p fakepw -d")
 end
 
 When /^I make the REST call to delete the namespace$/ do
