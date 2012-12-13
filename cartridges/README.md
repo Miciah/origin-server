@@ -197,12 +197,12 @@ The configure hook typically performs the following steps:
 
        ```
        cart_name/
-       run/
-       tmp/
-       ci/
-       repo -> ../app-root/repo
-       data -> ../app-root/data
-       runtime -> ../app-root/runtime
+           run/
+           tmp/
+           ci/
+           repo -> ../app-root/repo
+           data -> ../app-root/data
+           runtime -> ../app-root/runtime
        ```
 
 5. Check git/app_name.git out into app-root/repo.
