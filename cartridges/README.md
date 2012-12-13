@@ -195,6 +195,7 @@ The configure hook typically performs the following steps:
 
 4. Create the directory structure for the cartridge instance on the gear:
 
+       ```
        cart_name/
        run/
        tmp/
@@ -202,6 +203,7 @@ The configure hook typically performs the following steps:
        repo -> ../app-root/repo
        data -> ../app-root/data
        runtime -> ../app-root/runtime
+       ```
 
 5. Check git/app_name.git out into app-root/repo.
        
@@ -221,11 +223,13 @@ The configure hook typically performs the following steps:
     
 7. Set appropriate SELinux contexts on the following (recursively):
 
+       ```
        git/
        app-root/
        cart_name/
        the gear's home directory
        .env/uservars
+       ```
 
 8. Populate the .env/ directory:
 
