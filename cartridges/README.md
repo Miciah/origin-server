@@ -111,6 +111,7 @@ The  following describes the structure of a cartridge as installed on a node hos
     /usr/libexec/openshift/cartridges/name/
         info/
             bin/
+                app_ctl.sh
             hooks/
             connection-hooks/ (optional)
             data/
@@ -128,7 +129,10 @@ The  following describes the structure of a cartridge as installed on a node hos
 info/bin/ contains helper scripts for hooks and other cartridge-specific
 executable binaries.
 
-info/hooks/ contains hooks for mcollective and life-cycle control scripts.
+info/bin/app_ctl.sh provides life-cycle control, including start and
+stop actions.  This hook must be included in any cartridge.
+
+info/hooks/ contains hooks for mcollective.
 
 info/data/git_template.git/ contains the initial git repository that is cloned
 to the git/ directory when the cartridge is instantiated.
