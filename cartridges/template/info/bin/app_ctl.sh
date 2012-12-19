@@ -24,7 +24,8 @@ start() {
     fi
     set_app_state started
 
-    ### INSERT START CODE HERE
+    ### INSERT CODE HERE
+    # start foo
 
     run_user_hook start
 }
@@ -32,7 +33,8 @@ start() {
 stop() {
     set_app_state stopped
 
-    ### INSERT STOP CODE HERE
+    ### INSERT CODE HERE
+    # stop foo
 
     run_user_hook stop
 }

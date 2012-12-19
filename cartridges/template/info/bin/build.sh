@@ -9,6 +9,6 @@ for f in ~/.env/*; do
     source $f
 done
 
-CONFIG_DIR="$CARTRIDGE_BASE_PATH/foo-0.1/info/configuration"
+CONFIG_DIR="$CARTRIDGE_BASE_PATH/${CART_NAME}-${CART_VERSION}/info/configuration"
 
 user_build.sh
