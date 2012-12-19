@@ -6,6 +6,10 @@
 # node_ssl_template.conf gets copied in unaltered and should contain
 # all of the configuration bits required for ssl to work including key location
 #
+
+CARTRIDGE_NAME="my-new-cartridge"
+CARTRIDGE_VERSION="0.1"
+
 function print_help {
     echo "Usage: $0 app-name namespace uuid"
 
@@ -21,7 +25,7 @@ namespace=`basename $2`
 uuid=$3
 IP=$4
 
-cartridge_type='diy-0.1'
+cartridge_type="${CARTRIDGE_NAME}-${CARTRIDGE_VERSION}"
 source "/etc/openshift/node.conf"
 source ${CARTRIDGE_BASE_PATH}/abstract/info/lib/util
 

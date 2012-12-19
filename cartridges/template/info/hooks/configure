@@ -1,14 +1,17 @@
 #!/bin/bash
 
-# Creates a diy instance
+# Creates a foo instance
 
 # Exit on any errors
 set -e
 
+CARTRIDGE_NAME="foo"
+CARTRIDGE_VERSION="0.1"
+
 function print_help {
     echo "Usage: $0 app-name namespace uuid git-url"
 
-    echo "$0 $@" | logger -p local0.notice -t openshift_origin_diy_configure
+    echo "$0 $@" | logger -p local0.notice -t openshift_origin_foo_configure
     exit 1
 }
 
@@ -25,7 +28,7 @@ done
 
 [ $# -eq 4 -o $# -eq 3 ] || print_help
 
-cartridge_type="diy-0.1"
+cartridge_type="${CARTRIDGE_NAME}-${CARTRIDGE_VERSION}"
 source "/etc/openshift/node.conf"
 source ${CARTRIDGE_BASE_PATH}/abstract/info/lib/util
 
@@ -38,7 +41,7 @@ check_cartridge_dir_doesnt_exist
 if [ ! -d $git_url ]; then
 	clone_external_git_repo $application $user_id $group_id $uuid $git_url
 else
-	clone_git_repo $application $user_id $group_id $uuid "diy 0.1"
+	clone_git_repo $application $user_id $group_id $uuid "${CARTRIDGE_NAME} ${CARTRIDGE_VERSION}"
 fi
 
 #
@@ -46,8 +49,8 @@ fi
 #
 
 create_cartridge_instance_dir "$cartridge_type"
-DIY_INSTANCE_DIR=$(get_cartridge_instance_dir "$cartridge_type")
-pushd "$DIY_INSTANCE_DIR" > /dev/null
+INSTANCE_DIR=$(get_cartridge_instance_dir "$cartridge_type")
+pushd "$INSTANCE_DIR" > /dev/null
 create_standard_app_dirs
 mkdir -p ../.m2/repository
 chown -R $user_id ../.m2/repository

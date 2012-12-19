@@ -14,7 +14,7 @@
       <builderSize>small</builderSize>
     </hudson.plugins.openshift.OpenShiftBuilderSizeJobProperty>
     <hudson.plugins.openshift.OpenShiftBuilderTypeJobProperty>
-      <builderType>diy-0.1</builderType>
+      <builderType>foo-0.1</builderType>
     </hudson.plugins.openshift.OpenShiftBuilderTypeJobProperty>
     <hudson.plugins.openshift.OpenShiftBuilderTimeoutJobProperty>
       <builderTimeout>300000</builderTimeout>

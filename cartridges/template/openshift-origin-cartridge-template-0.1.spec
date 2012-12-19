@@ -1,8 +1,8 @@
-%global cartridgedir %{_libexecdir}/openshift/cartridges/foo
+%global cartridgedir %{_libexecdir}/openshift/cartridges/openshift-origin-cartridge-foo-0.1
 
 Summary:       Provides foo support
 Name:          openshift-origin-cartridge-foo
-Version: 0.1
+Version: 0.0
 Release:       1%{?dist}
 Group:         Development/Languages
 License:       ASL 2.0
@@ -87,5 +87,3 @@ ln -s %{cartridgedir}/../abstract/info/bin/sync_gears.sh %{buildroot}%{cartridge
 
 
 %changelog
-* Fri Dec 14 2012 Your Name <your@email.com> 0.0
-- initial revision

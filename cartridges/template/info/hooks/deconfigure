@@ -2,6 +2,9 @@
 
 # Destroys diy instance
 
+CARTRIDGE_NAME="foo"
+CARTRIDGE_VERSION="0.1"
+
 function print_help {
     echo "Usage: $0 app-name namespace uuid"
 
@@ -22,7 +25,7 @@ done
 
 [ $# -eq 3 ] || print_help
 
-cartridge_type="diy-0.1"
+cartridge_type="${CARTRIDGE_NAME}-${CARTRIDGE_VERSION}"
 source "/etc/openshift/node.conf"
 source ${CARTRIDGE_BASE_PATH}/abstract/info/lib/util
 
