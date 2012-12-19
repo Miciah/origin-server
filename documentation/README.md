@@ -29,9 +29,12 @@ Following is an index of documentation contained within this repository.
 * [Architecture](../README.md).  Describes the basic components of an OpenShift
 installation.
 
-* [Cartridges](../cartridges/README.md).  Defines the concepts of hooks,
+* [Cartridges Overview](../cartridges/README.md).  Defines the concepts of hooks,
 connection hooks, profiles, components, and connectors and describes cartridges
 in logical and concrete terms.
+
+* [Creating a New Cartridge](../cartridges/creating-a-new-cartridge.md).
+Explains, step-by-step, how to create a new cartridge.
 
 * [Communication between Broker and Node](./communication-between-broker-and-node.md).
 Describes how cartridges such haproxy and jenkins authenticate with the broker
