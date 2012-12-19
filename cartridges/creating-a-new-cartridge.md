@@ -88,21 +88,21 @@ appropriately.
 
 Update the Jenkins build information:
 
-   $ vim my-new-cartridge/info/configuration/jenkins_job_template.xml
+    $ vim my-new-cartridge/info/configuration/jenkins_job_template.xml
 
 Jenkins is used for automated builds.  If you will not need this
 functionality in your cartridge, you can ignore or delete this file.
 
 Update the cartridge hooks:
 
-   $ vim my-new-cartridge/info/hooks/configure my-new-cartridge/info/hooks/deconfigure
+    $ vim my-new-cartridge/info/hooks/configure my-new-cartridge/info/hooks/deconfigure
 
 Change every instance of "foo" to the actual name of your cartridge, and
 update CARTRIDGE_VERSION appropriately.
 
 Update the cartridge manifest:
 
-   $ vim my-new-cartridge/info/manifest.yml
+    $ vim my-new-cartridge/info/manifest.yml
 
 Update the Name:, Display-Name:, Description:, and Help-Topics: fields
 as appropriate.  Add any Requires: lines for other ***cartridges*** (not
@@ -206,7 +206,7 @@ After installing your newly built cartridge on the nodes, be sure to
 clear the cache on your broker host (or hosts) so that they will fetch
 updated cartridge information from the nodes:
 
-    \# cd /var/www/openshift/broker
-    \# bundle exec rake tmp:clear
+    # cd /var/www/openshift/broker
+    # bundle exec rake tmp:clear
 
 You should now be able to use your new cartridge.
