@@ -166,11 +166,12 @@ Descriptor
 The descriptor of a cartridge, stored in info/manifest.yml, is read by
 OpenShift::Node#get_cartridge_list and #get_cartridge_info class methods.  The
 get_cartridge_list method is used, in turn, by the cartridge-list action,
-described in the section on communication between broker and node.  (The
-get_cartridge_info command is exposed by the /usr/bin/oo-cartridge-list
-executable and is otherwise unused.) The broker uses the cartridge-list action
-to get the descriptors for all the cartridges available on a node.  The broker
-uses these descriptors to instantiate cartridges on the node.
+described in the [documentation on communication between broker and node](../documentation/communication-between-broker-and-node.md).
+(The get_cartridge_info command is exposed by the
+/usr/bin/oo-cartridge-list executable and is otherwise unused.) The
+broker uses the cartridge-list action to get the descriptors for all the
+cartridges available on a node.  The broker uses these descriptors to
+instantiate cartridges on the node.
 
 
 Hooks
