@@ -159,6 +159,9 @@ The following actions are defined:
 
 * set-quota
 
+cartridge-list returns the list of available cartridge, as determined by
+scanning the /usr/libexec/openshift/cartridges directory.
+
 TODO: Document them!
 
 The DSL by which the node (mcollective agent) can issue commands to the broker
