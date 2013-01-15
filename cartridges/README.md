@@ -266,10 +266,27 @@ The configure hook typically performs the following steps:
 11. Re-enable cgroups.
 
 
-TODO: The following hooks should be documented: conceal-port,
-configure-jbosseap-6.0, control-scripts, deconfigure, deploy-httpd-proxy,
-expose-port, move, post-move, pre-destroy, pre-install, pre-move, reload,
-remove-httpd-proxy, restart, show-port, start, status, stop, and threaddump.
+TODO: The following hooks need to be documented:
+* configure-jbosseap-6.0
+* control-scripts
+* deconfigure
+* deploy-httpd-proxy
+* move
+* post-move
+* pre-destroy
+* pre-install
+* pre-move
+* reload
+* remove-httpd-proxy
+* restart
+* start
+* status
+* stop
+* threaddump
+
+The following hooks are deprecated:
+
+* expose-port, show-port, and conceal-port ([announced 2013-01-14](http://lists.openshift.redhat.com/openshift-archives/dev/2013-January/msg00038.html)).
 
 
 Logical View of an Instantiated Cartridge
