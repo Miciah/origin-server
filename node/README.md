@@ -5,15 +5,16 @@ Hosted applications are run in containers called "gears." These gears
 are run on hosts (which can be physical hosts or virtual machines)
 called "nodes."
 
-Each node runs a system Apache instance that listens on port 80 on
-a public-facing network interface.  Each gear is assigned an address in
-the 127.0.0.0/8 block, and a hosted Web application listens on port 8080
-on its assigned private 127.x.y.z address.
+Each node runs a system Apache instance with mod_proxy that listens on
+port 80 on a public-facing network interface.  Each gear is assigned an
+address in the 127.0.0.0/8 block, and a hosted Web application listens
+on port 8080 on its assigned private 127.x.y.z address.
 
 When a Web client requests a URL for a hosted Web application, the
 request goes to the node's system Apache instance.  The system Apache
 instance examines the virtual-host header (the "Host:" HTTP header) and
-dispatches the request to the appropriate private address.
+dispatches the request to the 127.x.y.z:8080 private address of the
+appropriate gear.
 
 XXX Talk about port-proxy.
 
