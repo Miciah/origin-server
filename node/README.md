@@ -16,7 +16,9 @@ instance examines the virtual-host header (the "Host:" HTTP header) and
 dispatches the request to the 127.x.y.z:8080 private address of the
 appropriate gear.
 
-XXX Talk about port-proxy.
+For an explanation of how connections other than regular HTTP
+connections are handled, see
+[the documentation on the port-proxy](../port-proxy/README.md).
 
 Notice of Export Control Law
 ----------------------------
