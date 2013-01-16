@@ -54,6 +54,12 @@ to carry out certain operations.
 * [Idler](../node-util/README-Idler.md).  Describes installation, configuration,
 and use of the idler.
 
+* [Node](../node/README.md).  Describes the role of the node in the
+OpenShift architecture.
+
+* [Port proxy](../port-proxy/README.md).  Describes the role of the
+port-proxy in the OpenShift architecture.
+
 * [Scaling](./scaling.md).  Describes the technical aspects of how OpenShift
 scales applications across gears.
 
