@@ -17,7 +17,8 @@ on the node component](../node/README.md).
 However, sometimes gears need to accept other types of connections.
 The two most common such scenarios are the following:
 
-* A gear needs to connect to another gear.
+* A gear needs to connect to another gear (which may be on the same node
+  or another node).
 
 * A gear needs to listen for connections on a public interface besides
   HTTP connections to port 80.
