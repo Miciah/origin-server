@@ -63,5 +63,8 @@ port-proxy in the OpenShift architecture.
 * [Scaling](./scaling.md).  Describes the technical aspects of how OpenShift
 scales applications across gears.
 
+* [Scaling example](./scaling-example.md).  Provides an example of how
+scaling works with the MongoDB embedded cartridge.
+
 * [Terminology](./terminology.md).  Provides a glossary of the terms used
 throughout the documentation.
