@@ -1,3 +1,20 @@
+Note: This document describes the v1 cartridge format.   Please see the following,
+official documentation on the v2 cartridge format:
+
+#### Technical docs
+
+https://github.com/openshift/origin-server/blob/master/node/README.writing_cartridges.md
+
+https://github.com/openshift/origin-server/blob/master/node/README.node_module_design.md
+
+https://github.com/openshift/origin-server/blob/master/node/README.writing_applications.md
+
+#### Getting Started
+
+https://www.openshift.com/blogs/new-openshift-cartridge-format-part-1
+
+https://www.openshift.com/blogs/new-openshift-cartridge-format-part-2
+
 OpenShift Hooks for Git
 =======================
 
