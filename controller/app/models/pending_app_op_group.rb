@@ -300,8 +300,11 @@ class PendingAppOpGroup
           RemoteJob.execute_parallel_jobs(handle)
           RemoteJob.get_parallel_run_results(handle) do |tag, gear_id, output, status|
             if status==0 && tag.start_with?("expose-ports::")
+              result = ResultIO.new(status, output, gear_id)
               component_instance_id = tag[14..-1]
-              application.component_instances.find(component_instance_id).process_properties(ResultIO.new(status, output, gear_id))
+              component_instance = application.component_instances.find(component_instance_id)
+              component_instance.process_properties(result)
+              application.process_commands(result, component_instance)
             end
           end
           parallel_job_ops.each{ |op| op.set(:state, :completed) }
