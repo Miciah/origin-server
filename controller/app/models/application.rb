@@ -1121,6 +1121,10 @@ class Application
       when "BROKER_KEY_REMOVE"
         pending_op = PendingAppOpGroup.new(op_type: :remove_broker_auth_key, args: { }, user_agent: self.user_agent)
         Application.where(_id: self._id).update_all({ "$push" => { pending_op_groups: pending_op.serializable_hash_with_timestamp } })
+      when "NOTIFY_ENDPOINT_CREATE"
+        OpenShift::RoutingService.notify_create_public_endpoint self, *command_item[:args]
+      when "NOTIFY_ENDPOINT_DELETE"
+        OpenShift::RoutingService.notify_delete_public_endpoint self, *command_item[:args]
       end
     end
 
