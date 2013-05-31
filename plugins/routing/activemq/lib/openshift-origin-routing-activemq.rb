@@ -1,8 +1,6 @@
-require "openshift-origin-common"
-
 module OpenShift
   module ActiveMQRoutingModule
-    require 'routing_activemq_engine' if defined?(Rails) && Rails::VERSION::MAJOR == 3
+    require 'activemq_routing_engine' if defined?(Rails) && Rails::VERSION::MAJOR == 3
   end
 end
 

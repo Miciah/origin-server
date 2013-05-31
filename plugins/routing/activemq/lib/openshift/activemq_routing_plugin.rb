@@ -2,7 +2,6 @@
 # When endpoints are exposed or concealed, publish an update to
 # ActiveMQ.
 #
-require 'openshift-origin-common'
 require 'stomp'
 
 module OpenShift
