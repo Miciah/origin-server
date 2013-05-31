@@ -5,4 +5,3 @@ module OpenShift
 end
 
 require "openshift/activemq_routing_plugin.rb"
-OpenShift::RoutingService.register_provider OpenShift::ActiveMQPlugin.new

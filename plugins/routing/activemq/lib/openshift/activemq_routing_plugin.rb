@@ -6,14 +6,16 @@ require 'stomp'
 
 module OpenShift
   class ActiveMQPlugin < OpenShift::RoutingService
-    def send_msg(msg)
-      @topic ||= Rails.application.config.routing_activemq[:topic]
-      @conn ||= Stomp::Connection.open Rails.application.config.routing_activemq[:username],
+    def initialize
+      @topic = Rails.application.config.routing_activemq[:topic]
+      @conn = Stomp::Connection.open Rails.application.config.routing_activemq[:username],
                                      Rails.application.config.routing_activemq[:password],
                                      Rails.application.config.routing_activemq[:host],
                                      Rails.application.config.routing_activemq[:port],
                                      true
+    end
 
+    def send_msg(msg)
       @conn.publish @topic, msg
     end
 
