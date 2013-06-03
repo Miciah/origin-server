@@ -125,7 +125,9 @@ class ResultIO
         elsif line.start_with?('APP_INFO: ')
           self.appInfoIO << line['APP_INFO: '.length..-1]
         elsif line =~ /^NOTIFY_ENDPOINT_(CREATE|DELETE): /
-          endpoint,address,port = line['NOTIFY_ENDPOINT_XXXXXX: '.length..-1].chomp.split(' ')
+          # 'NOTIFY_ENDPOINT_CREATE: ' and 'NOTIFY_ENDPOINT_DELETE: '
+          # both have length 24.
+          endpoint,address,port = line[23..-1].chomp.split(' ')
           if line =~ /^NOTIFY_ENDPOINT_CREATE: /
             self.cart_commands.push({:command => "NOTIFY_ENDPOINT_CREATE", :args => [endpoint,address,port]})
           else
