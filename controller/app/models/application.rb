@@ -1438,12 +1438,18 @@ class Application
     init_git_url = nil unless hosts_app_dns
 
     gear_id_prereqs = {}
-    creating_new_app = false
+    maybe_notify_app_create_op = []
     gear_ids.each do |gear_id|
       host_singletons = (gear_id == singleton_gear_id)
       app_dns = (host_singletons && hosts_app_dns)
-      creating_new_app = true if app_dns
-      init_gear_op = PendingAppOp.new(op_type: :init_gear,   args: {"group_instance_id"=> ginst_id, "gear_id" => gear_id, "host_singletons" => host_singletons, "app_dns" => app_dns})
+
+      if app_dns
+        notify_app_create_op = PendingAppOp.new(op_type: :notify_app_create)
+        pending_ops.push(notify_app_create_op) 
+        maybe_notify_app_create_op = [notify_app_create_op]
+      end
+
+      init_gear_op = PendingAppOp.new(op_type: :init_gear,   args: {"group_instance_id"=> ginst_id, "gear_id" => gear_id, "host_singletons" => host_singletons, "app_dns" => app_dns}, prereq: maybe_notify_app_create_op)
       init_gear_op.prereq = [ginst_op_id] unless ginst_op_id.nil?
       reserve_uid_op  = PendingAppOp.new(op_type: :reserve_uid,  args: {"group_instance_id"=> ginst_id, "gear_id" => gear_id}, prereq: [init_gear_op._id.to_s])
       create_gear_op    = PendingAppOp.new(op_type: :create_gear,  args: {"group_instance_id"=> ginst_id, "gear_id" => gear_id}, prereq: [reserve_uid_op._id.to_s], retry_rollback_op: reserve_uid_op._id.to_s)
@@ -1478,12 +1484,6 @@ class Application
 
     ops = calculate_add_component_ops(comp_specs, ginst_id, gear_id_prereqs, singleton_gear_id, component_ops, is_scale_up, ginst_op_id, init_git_url)
     pending_ops.push(*ops)
-
-    if creating_new_app
-      notify_app_create_op = PendingAppOp.new(op_type: :notify_app_create, prereq: [pending_ops.last._id.to_s])
-      pending_ops.push(notify_app_create_op) 
-    end
-
     pending_ops
   end
 
