@@ -19,9 +19,27 @@ module OpenShift
       @conn.publish @topic, msg
     end
 
+    def notify_create_application(app)
+      msg = {
+        :action => :create_application,
+        :app_name => app.name,
+        :namespace => app.domain.namespace,
+      }
+      send_msg msg.to_yaml
+    end
+
+    def notify_delete_application(app)
+      msg = {
+        :action => :delete_application,
+        :app_name => app.name,
+        :namespace => app.domain.namespace,
+      }
+      send_msg msg.to_yaml
+    end
+
     def notify_create_public_endpoint(app, endpoint_name, public_ip, public_port)
       msg = {
-        :action => :add,
+        :action => :add_gear,
         :app_name => app.name,
         :namespace => app.domain.namespace,
         :public_port_name => endpoint_name,
@@ -33,8 +51,8 @@ module OpenShift
 
     def notify_delete_public_endpoint(app, endpoint_name, public_ip, public_port)
       msg = {
-        :action => :delete,
-        :app_name => name,
+        :action => :delete_gear,
+        :app_name => app.name,
         :namespace => app.domain.namespace,
         :public_port_name => endpoint_name,
         :public_address => public_ip,

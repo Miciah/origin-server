@@ -305,6 +305,10 @@ class PendingAppOpGroup
             job = gear.get_fix_authorized_ssh_keys_job(op.args["keys_attrs"])
             RemoteJob.add_parallel_job(handle, tag, gear, job)
             use_parallel_job = true
+          when :notify_app_create
+            OpenShift::RoutingService.notify_create_application application
+          when :notify_app_delete
+            OpenShift::RoutingService.notify_delete_application application
           end
           
           if use_parallel_job 

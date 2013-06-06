@@ -43,6 +43,14 @@ module OpenShift
       @routing_provider.each { |p| p.send(event, *args) if p.respond_to?(event) }
     end
 
+    def self.notify_create_application(app)
+      notify_providers :notify_create_application, app
+    end
+
+    def self.notify_delete_application(app)
+      notify_providers :notify_delete_application, app
+    end
+
     def self.notify_create_public_endpoint(app, endpoint_name, public_ip, public_port)
       notify_providers :notify_create_public_endpoint, app, endpoint_name, public_ip, public_port
     end
