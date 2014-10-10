@@ -25,7 +25,7 @@ module OpenShift
       @port = (cfg['ACTIVEMQ_PORT'] || 61613).to_i
       @destination = cfg['ACTIVEMQ_DESTINATION'] || cfg['ACTIVEMQ_TOPIC'] || '/topic/routinginfo'
       @pool_name_format = cfg['POOL_NAME'] || 'pool_ose_%a_%n_80'
-      @route_name_format = cfg['ROUTE_NAME'] || 'irule_ose_%a_%n'
+      @route_name_format = cfg['ROUTE_NAME'] || 'route_ose_%a_%n'
       @monitor_name_format = cfg['MONITOR_NAME']
       @monitor_path_format = cfg['MONITOR_PATH']
       @monitor_up_code = cfg['MONITOR_UP_CODE'] || '1'
