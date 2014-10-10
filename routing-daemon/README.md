@@ -22,11 +22,22 @@ configures nginx as a reverse proxy are included in this repository.  Edit
 "lbaas", or "nginx" and then following the appropriate module-specific
 configuration described below.
 
+Internally, the routing daemon logic is divided into controllers, which
+encompass higher-level logic, and models, which encompass the logic for
+communicating with load balancers.  These controllers include a simple
+controller that immediately dispatches commands to the load balancer (used for
+nginx and F5), a controller that includes logic to batch configuration changes
+and only dispatch commands to the load balancer at an interval (configurable
+using the `UPDATE_INTERVAL` option in `routing.conf`; used if `LOAD_BALANCER` is
+set to `f5_batched`), and an asynchronous controller for load balancers (such as
+LBaaS) where it is necessary first to issue commands and then to poll for an
+asynchronous confirmation on each command.
+
 For testing purposes, a dummy model, which merely prints actions that
 a normal model performs rather than performing actions itself, is also
 included.  If you specify the "dummy" module, then you will get the
-dummy model with the F5 controller; if you specify the "dummy_async"
-module, then you will get the dummy model with the LBaaS asynchronous
+dummy model with the simple controller; if you specify the "dummy_async"
+module, then you will get the dummy model with the asynchronous
 controller.
 
 Using F5 BIG-IP LTM
