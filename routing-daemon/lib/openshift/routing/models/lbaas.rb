@@ -1,3 +1,4 @@
+require 'parseconfig'
 require 'time'
 require 'openshift/routing/models/load_balancer'
 

@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'json'
+require 'parseconfig'
 require 'pp'
 require 'rest_client'
 require 'openshift/routing/controllers/load_balancer'

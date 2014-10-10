@@ -1,6 +1,7 @@
 require 'openshift/routing/models/load_balancer'
 
 require 'erb'
+require 'parseconfig'
 
 module OpenShift
 

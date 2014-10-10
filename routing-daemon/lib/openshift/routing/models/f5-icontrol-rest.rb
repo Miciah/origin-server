@@ -1,5 +1,6 @@
 require 'openshift/routing/models/load_balancer'
 require 'json'
+require 'parseconfig'
 require 'restclient'
 
 module OpenShift

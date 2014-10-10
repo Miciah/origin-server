@@ -1,5 +1,6 @@
 require 'openshift/routing/models/load_balancer'
 require 'f5-icontrol'
+require 'parseconfig'
 
 module OpenShift
 
