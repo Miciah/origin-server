@@ -21,8 +21,17 @@ module OpenShift
 
       @user = cfg['ACTIVEMQ_USER'] || 'routinginfo'
       @password = cfg['ACTIVEMQ_PASSWORD'] || 'routinginfopasswd'
-      @host = cfg['ACTIVEMQ_HOST'] || 'activemq.example.com'
       @port = (cfg['ACTIVEMQ_PORT'] || 61613).to_i
+      @hosts = (cfg['ACTIVEMQ_HOST'] || 'activemq.example.com').split(',').map do |hp|
+        hp.split(":").instance_eval do |h,p|
+          {
+            :host => h,
+            # Originally, ACTIVEMQ_HOST allowed specifying only one host, with
+            # the port specified separately in ACTIVEMQ_PORT.
+            :port => p || cfg['ACTIVEMQ_PORT'] || '61613',
+          }
+        end
+      end
       @destination = cfg['ACTIVEMQ_DESTINATION'] || cfg['ACTIVEMQ_TOPIC'] || '/topic/routinginfo'
       @pool_name_format = cfg['POOL_NAME'] || 'pool_ose_%a_%n_80'
       @route_name_format = cfg['ROUTE_NAME'] || 'route_ose_%a_%n'
@@ -115,16 +124,12 @@ module OpenShift
         "client-id" => client_id,
         "client_id" => client_id,
         "clientID" => client_id,
-        "host" => @host
+        "host" => "localhost" # Does not need to be the actual hostname.
       }
 
       client_hash = {
-        :hosts => [{
-          :login => @user,
-          :passcode => @password,
-          :host => @host,
-          :port => @port
-        }],
+        :hosts => @hosts.map {|host| host.merge({ :login => @user, :passcode => @password })},
+        :reliable => true,
         :connect_headers => client_hdrs
       }
 
