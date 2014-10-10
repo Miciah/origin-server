@@ -72,10 +72,10 @@ module OpenShift
     def delete_pool pool_name
     end
 
-    def create_route profile_name, profile_path, pool_name
+    def create_route route_name, route_path, pool_name
     end
 
-    def delete_route profile_name
+    def delete_route route_name
     end
 
     def create_monitor monitor_name, path, up_code, type, interval, timeout
