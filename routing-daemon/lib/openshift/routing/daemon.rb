@@ -104,8 +104,8 @@ module OpenShift
 
       @logger.info "Initializing routing controller..."
       @lb_controller = @lb_controller_class.new @lb_model_class, @logger, cfgfile
-      #@logger.info "Found #{@lb_controller.pools.length} pools:\n" +
-      #             @lb_controller.pools.map{|k,v|"  #{k} (#{v.members.length} members)"}.join("\n")
+      @logger.info "Found #{@lb_controller.pools.length} pools:\n" +
+                   @lb_controller.pools.map{|k,v|"  #{k} (#{v.members.length} members)"}.join("\n")
 
       client_id = Socket.gethostname + '-' + $$.to_s
       client_hdrs = {
