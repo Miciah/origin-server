@@ -105,8 +105,12 @@ argvs.each do |argv|
     case argv.shift
     when 'get-job-status'
       raise ArgumentError.new 'Requires a job id.' unless 1 == argv.count
-      puts "Requesting status of job #{argv[0]}."
-      puts lb.get_job_status argv[0]
+      begin
+        puts "Requesting status of job #{argv[0]}."
+        puts lb.get_job_status argv[0]
+      rescue NoMethodError
+        raise ArgumentError.new 'The load balancer does not support the get-job-status command.'
+      end
 
     when 'list-pools'
       puts 'Listing pools.'
