@@ -398,7 +398,7 @@ module OpenShift
       # Check whether any previously submitted operations have completed.
       poll_async_jobs
       # TODO: Consider instead exposing poll_async_jobs for
-      # LoadBalancerConfigurationDaemon to invoke directly.
+      # RoutingDaemon to invoke directly.
 
       # Filter out operations that involve pools that are in the process
       # of being added to the load balancer, as denoted by the existence

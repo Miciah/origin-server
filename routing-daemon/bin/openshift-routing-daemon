@@ -14,5 +14,5 @@ options = {
 Daemons.run_proc('openshift-routing-daemon', options) do
   require 'openshift/routing/daemon'
 
-  OpenShift::LoadBalancerConfigurationDaemon.new.listen
+  OpenShift::RoutingDaemon.new.listen
 end

@@ -15,7 +15,7 @@ module OpenShift
   # OpenShift::LoadBalancerModel object and controlled using an
   # OpenShift::LoadBalancerController object.
   #
-  class LoadBalancerConfigurationDaemon
+  class RoutingDaemon
     def read_config cfgfile
       cfg = ParseConfig.new(cfgfile)
 
