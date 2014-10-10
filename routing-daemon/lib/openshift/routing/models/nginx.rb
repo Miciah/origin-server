@@ -24,6 +24,12 @@ module OpenShift
       @alias_fname_regex = Regexp.new("\\Aalias_(.*)\\.conf\\Z")
     end
 
+    # We manage the backend configuration by having one file per pool.  This
+    # simplifies the creation, manipulation, and deletion of pools because we
+    # eliminate (in the case of creation and deletion) or at least reduce (in
+    # the case of manipulation) the amount of parsing we need to do to update
+    # the configuration files.
+
     # get_pool_names :: [String]
     def get_pool_names
       pool_names = []
@@ -42,6 +48,12 @@ module OpenShift
     def delete_pools pool_names
       File.unlink(*pool_names.map {|n| "#{@confdir}/#{n}.conf"})
     end
+
+    # Although it would be much easier to manage the frontend configuration by
+    # using one .conf file per route (the way we use one file per alias, or the
+    # way we manage the backend configuration by having one file per pool),
+    # nginx does not allow multiple server {} clauses for the same virtual
+    # server, which means we cannot split the configuration into separate files.
 
     def get_route_names
       routes = []
