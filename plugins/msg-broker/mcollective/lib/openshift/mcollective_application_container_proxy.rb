@@ -1746,7 +1746,11 @@ module OpenShift
 
         proxy_args = []
         options[:proxy_gears].each do |gear|
-          proxy_args << "#{gear.uuid},#{gear.name},#{gear.application.domain_namespace},#{gear.public_hostname},#{gear.group_instance.platform}"
+          begin
+            proxy_args << "#{gear.uuid},#{gear.name},#{gear.application.domain_namespace},#{gear.public_hostname},#{gear.group_instance.platform}"
+          rescue OpenShift::NodeException => e
+            Rails.logger.warn "Unable to get public hostname for proxy gear #{gear.uuid} (#{e.class}: #{e.message}); skipping it"
+          end
         end
 
         args['--proxy-gears'] = proxy_args.join(' ')
@@ -1755,9 +1759,12 @@ module OpenShift
         options[:web_gears].each do |gear|
           # TODO eventually support multiple ports
           first_port_interface = gear.port_interfaces.select { |pi| pi.type.include? "web_framework" }.first
-
-          # uuid, name, namespace, proxy_hostname, proxy port
-          web_args << "#{gear.uuid},#{gear.name},#{gear.application.domain_namespace},#{gear.public_hostname},#{first_port_interface.external_port},#{gear.group_instance.platform}"
+          begin
+            # uuid, name, namespace, proxy_hostname, proxy port
+            web_args << "#{gear.uuid},#{gear.name},#{gear.application.domain_namespace},#{gear.public_hostname},#{first_port_interface.external_port},#{gear.group_instance.platform}"
+          rescue OpenShift::NodeException => e
+            Rails.logger.warn "Unable to get public hostname for web gear #{gear.uuid} (#{e.class}: #{e.message}); skipping it"
+          end
         end
 
         args['--web-gears'] = web_args.join(' ')
