@@ -24,6 +24,18 @@ module OpenShift
       @ssh_private_key = cfg['BIGIP_SSHKEY'] || '/etc/openshift/bigip.key'
     end
 
+    def run cmd
+      # Using exec 2>&1 ensures that we redirect any error output from /bin/sh
+      # (such as syntax errors in the command) in addition to any error output
+      # from the command itself.
+      output = `exec 2>&1; #{cmd}`
+
+      if $?.exitstatus != 0
+        raise LBModelException.new "Command `#{cmd}`" \
+          " returned exit code #{$?.exitstatus}, output: #{result}"
+      end
+    end
+
     # Send a REST request to the given URL and return the response.
     # rest_request :: Hash -> Net::HTTPResponse
     def rest_request options
@@ -245,10 +257,11 @@ module OpenShift
         keyfname.write(private_key)
         keyfname.close
 
+
         # scp cert and to F5 LTM (requires ssh key to be in authorized_keys on the F5 LTM
         @logger.debug("Copying certificate and key for alias #{alias_str} for pool #{pool_name} to LTM host")
-        result = `scp -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} #{certfname.path} admin@#{@host}:/var/tmp/#{alias_str}.crt`
-        result = `scp -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} #{keyfname.path} admin@#{@host}:/var/tmp/#{alias_str}.key`
+        run("scp -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} #{certfname.path} admin@#{@host}:/var/tmp/#{alias_str}.crt")
+        run("scp -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} #{keyfname.path} admin@#{@host}:/var/tmp/#{alias_str}.key")
 
         @logger.debug("LTM cert to be installed /var/tmp/#{alias_str}.crt")
         post(url: "https://#{@host}/mgmt/tm/sys/crypto/cert",
@@ -284,9 +297,9 @@ module OpenShift
 
         # Requires LTM System->Users->admin terminal setting to be set to advanced (bash)
         @logger.debug("LTM removing temporary alias certificate. rm -f /var/tmp/#{alias_str}.crt")
-        result = `ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} admin@#{@host} 'rm -f /var/tmp/#{alias_str}.crt'`
+        run("ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} admin@#{@host} 'rm -f /var/tmp/#{alias_str}.crt'")
         @logger.debug("LTM removing temporary alias key. rm -f /var/tmp/#{alias_str}.key")
-        result = `ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} admin@#{@host} 'rm -f /var/tmp/#{alias_str}.key'`
+        run("ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} admin@#{@host} 'rm -f /var/tmp/#{alias_str}.key'")
       rescue Errno::ENOENT
         # Nothing to do;
       ensure
