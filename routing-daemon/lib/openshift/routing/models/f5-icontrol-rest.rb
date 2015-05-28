@@ -261,7 +261,7 @@ module OpenShift
           " -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null" \
           " -i \"#{@ssh_private_key}\""
 
-        # scp cert and to F5 LTM (requires ssh key to be in authorized_keys on the F5 LTM
+        # scp cert and key to F5 LTM (requires ssh key to be in authorized_keys on the F5 LTM).
         @logger.debug("Copying certificate for alias #{alias_str} for pool #{pool_name} to LTM host")
         run("scp #{sshflags} #{certfile.path} admin@#{@host}:/var/tmp/#{alias_str}.crt")
 
