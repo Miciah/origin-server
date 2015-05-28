@@ -259,8 +259,10 @@ module OpenShift
 
 
         # scp cert and to F5 LTM (requires ssh key to be in authorized_keys on the F5 LTM
-        @logger.debug("Copying certificate and key for alias #{alias_str} for pool #{pool_name} to LTM host")
+        @logger.debug("Copying certificate for alias #{alias_str} for pool #{pool_name} to LTM host")
         run("scp -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} #{certfname.path} admin@#{@host}:/var/tmp/#{alias_str}.crt")
+
+        @logger.debug("Copying key for alias #{alias_str} for pool #{pool_name} to LTM host")
         run("scp -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} #{keyfname.path} admin@#{@host}:/var/tmp/#{alias_str}.key")
 
         @logger.debug("LTM cert to be installed /var/tmp/#{alias_str}.crt")
@@ -296,9 +298,10 @@ module OpenShift
                  }.to_json)
 
         # Requires LTM System->Users->admin terminal setting to be set to advanced (bash)
-        @logger.debug("LTM removing temporary alias certificate. rm -f /var/tmp/#{alias_str}.crt")
+        @logger.debug("LTM removing temporary alias certificate")
         run("ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} admin@#{@host} 'rm -f /var/tmp/#{alias_str}.crt'")
-        @logger.debug("LTM removing temporary alias key. rm -f /var/tmp/#{alias_str}.key")
+
+        @logger.debug("LTM removing temporary alias key")
         run("ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null -i #{@ssh_private_key} admin@#{@host} 'rm -f /var/tmp/#{alias_str}.key'")
       rescue Errno::ENOENT
         # Nothing to do;
