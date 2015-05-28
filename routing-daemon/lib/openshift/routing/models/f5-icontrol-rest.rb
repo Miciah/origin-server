@@ -249,13 +249,13 @@ module OpenShift
 
       begin
         # write temp cert and key
-        certfname = Tempfile.new('bigip-ssl-cert')
-        keyfname = Tempfile.new('bigip-ssl-key')
+        certfile = Tempfile.new('bigip-ssl-cert')
+        keyfile = Tempfile.new('bigip-ssl-key')
 
-        certfname.write(ssl_cert)
-        certfname.close
-        keyfname.write(private_key)
-        keyfname.close
+        certfile.write(ssl_cert)
+        certfile.close
+        keyfile.write(private_key)
+        keyfile.close
 
         sshflags = "-o StrictHostKeyChecking=no -o PasswordAuthentication=no" \
           " -o VerifyHostKeyDNS=no -o UserKnownHostsFile=/dev/null" \
@@ -263,10 +263,10 @@ module OpenShift
 
         # scp cert and to F5 LTM (requires ssh key to be in authorized_keys on the F5 LTM
         @logger.debug("Copying certificate for alias #{alias_str} for pool #{pool_name} to LTM host")
-        run("scp #{sshflags} #{certfname.path} admin@#{@host}:/var/tmp/#{alias_str}.crt")
+        run("scp #{sshflags} #{certfile.path} admin@#{@host}:/var/tmp/#{alias_str}.crt")
 
         @logger.debug("Copying key for alias #{alias_str} for pool #{pool_name} to LTM host")
-        run("scp #{sshflags} #{keyfname.path} admin@#{@host}:/var/tmp/#{alias_str}.key")
+        run("scp #{sshflags} #{keyfile.path} admin@#{@host}:/var/tmp/#{alias_str}.key")
 
         @logger.debug("LTM cert to be installed /var/tmp/#{alias_str}.crt")
         post(url: "https://#{@host}/mgmt/tm/sys/crypto/cert",
@@ -309,8 +309,8 @@ module OpenShift
       rescue Errno::ENOENT
         # Nothing to do;
       ensure
-        certfname.unlink
-        keyfname.unlink
+        certfile.unlink
+        keyfile.unlink
       end
     end
 
